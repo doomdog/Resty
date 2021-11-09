@@ -1,6 +1,17 @@
 Changes
 -------
 
+New in 0.4.0:
+
+- Added method to AbstractResource to return the response code for the URLConnection.
+- Created a replacement for DefaultHostnameVerifier because it is being removed from the JDK.
+- Cleaned up some out of date tests.
+- Minor code cleanup
+- Changed minimum Java version to 8.  It works best with Java 8, but might work with 11.
+- This release has issues with Java 17, which will be addressed in a separate release.
+- Note that this project was essentially abandoned many years ago and needs a lot of modernization.
+
+
 New in 0.3.2:
 
 - revert to Maven. Gradle came in through a pull request. Not intending to move to gradle just yet

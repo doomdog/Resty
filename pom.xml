@@ -3,7 +3,7 @@
     <groupId>us.monoid.web</groupId>
     <artifactId>resty</artifactId>
     <packaging>jar</packaging>
-    <version>0.3.4-SNAPSHOT</version>
+    <version>0.4.0</version>
     <name>Resty</name>
     <description>Simple Java client to talk to RESTful backends</description>
     <url>http://github.com/beders/resty</url>
@@ -20,9 +20,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:git@github.com:beders/Resty.git</connection>
-        <developerConnection>scm:git:git@github.com:beders/Resty.git</developerConnection>
-        <url>git@github.com:beders/Resty.git</url>
+        <connection>scm:git:git@github.com:doomdog/Resty.git</connection>
+        <developerConnection>scm:git:git@github.com:doomdog/Resty.git</developerConnection>
+        <url>git@github.com:doomdog/Resty.git</url>
     </scm>
     <build>
         <plugins>
@@ -41,8 +41,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
 

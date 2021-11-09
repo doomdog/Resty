@@ -10,24 +10,24 @@ Resty is a small, convenient interface to talk to RESTful services from Java.
 Its focus is on simplicity and ease-of-use, often requiring only two lines of code to access any web service.
 It supports chaining several requests which is very useful in RESTful application employing HATEOAS.
   
-Basic usage is very simple: Create a Resty instance, use authenticate methode to add credentials, then call one of the content type specific methods.
-The idea is that the method name will convey the expected content type you can then operate on.
+Basic usage is very simple: Create a Resty instance, use authenticate method to add credentials, then call one of the content type specific methods.
+The idea is that the method name will convey the expected content type you can then operate on.::
  
   import static us.monoid.web.Resty.*;
 
-GETting an URL (as JSON):
+GETting an URL (as JSON)::
 
   new Resty().json(url);
 
-POSTing to an URL (using multipart/form-data) and expecting JSON back:
+POSTing to an URL (using multipart/form-data) and expecting JSON back::
 
 	new Resty().json(url, form(data("name", "Don Draper"), data("occupation", "Ad Man")));
 	
-PUTting content and expecting JSON back:
+PUTting content and expecting JSON back::
 
 	new Resty().json(url, put(content(someJSON)));
  
-DELETE a resource via URL expecting JSON back:
+DELETE a resource via URL expecting JSON back::
 
  	new Resty().json(url, delete());
 
@@ -35,7 +35,7 @@ DELETE a resource via URL expecting JSON back:
 Here is an example on how to use the geonames web service. It retrieves the JSON object (see json.org for details) and gets the name of a place from the zip code::
   
  	Resty r = new Resty();
-	Object name = r.json("http://ws.geonames.org/postalCodeLookupJSON?postalcode=66780&country=DE").get("postalcodes[0].placeName");
+	Object name = r.json("http://api.geonames.org/postalCodeLookupJSON?formatted=true&postalcode=66780&country=DE&username=demo").get("postalcodes[0].placeName");
  
 See more examples below.
  
@@ -67,13 +67,15 @@ Growing
 Installation
 -------------
 Either create the JAR yourself (see target directory or grab the rest-\*.jar file and add it to your CLASSPATH.
-Or grab it from Maven central::
+Or grab it from Maven central:
+::
 
-<dependency>
-    <groupId>us.monoid.web</groupId>
-    <artifactId>resty</artifactId>
-    <version>0.3.2</version>
-</dependency>
+ <dependency>
+     <groupId>us.monoid.web</groupId>
+     <artifactId>resty</artifactId>
+     <version>0.3.2</version>
+ </dependency>
+
 
 Compile it yourself
 -------------------
@@ -88,8 +90,8 @@ See http://beders.github.com/Resty/Resty/Overview.html
 *Getting location information from the geonames web service, published as JSON*::
 
 	Resty r = new Resty();
-	Object name = r.json("http://ws.geonames.org/postalCodeLookupJSON?postalcode=66780&country=DE").
-		get("postalcodes[0].placeName");
+	Object name = r.json("http://api.geonames.org/postalCodeLookupJSON?formatted=true&postalcode=66780&country=DE&username=demo").
+        get("postalcodes[0].placeName");
 
 This gets a JSON object from the specified URL and extracts the first place name.
 
@@ -143,10 +145,13 @@ Developers
 
 Contributors
 ============
-Gabriel Falkenberg <gabriel.falkenberg@gmail.com>
-Remi Alvergnat <remi.alvergnat@gmail.com>
-Robert Fischer <robert.fischer@smokejumperit.com>
-https://github.com/jdmullin
-and othersxs
+::
+
+ Gabriel Falkenberg <gabriel.falkenberg@gmail.com>
+ Remi Alvergnat <remi.alvergnat@gmail.com>
+ Robert Fischer <robert.fischer@smokejumperit.com>
+ https://github.com/jdmullin
+ and others
+
 
  
