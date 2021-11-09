@@ -39,19 +39,19 @@ public class RestyTest {
 	@Test
 	public void formDataGet() throws Exception {
 		Resty r = new Resty();
-		String t = r.text("http://www.google.com/search?" +  GOOGLE_QUERY_DATA).toString();
+		String t = r.text("https://www.google.com/search?" +  GOOGLE_QUERY_DATA).toString();
 		System.out.println(t);
 		assertTrue(t.contains("resty"));
 	}
  
-	@Test
-	public void formDataPost() throws Exception {
-		Resty r = new Resty();
-		String t = r.text("http://www.cs.tut.fi/cgi-bin/run/~jkorpela/echoraw.cgi",
-				form(GOOGLE_QUERY_DATA)).toString();
-		System.out.println(t);
-		assertTrue(t.contains(GOOGLE_QUERY_DATA));
-	}
+//	@Test  This API is no longer available
+//	public void formDataPost() throws Exception {
+//		Resty r = new Resty();
+//		String t = r.text("https://www.cs.tut.fi/cgi-bin/run/~jkorpela/echoraw.cgi",
+//				form(GOOGLE_QUERY_DATA)).toString();
+//		System.out.println(t);
+//		assertTrue(t.contains(GOOGLE_QUERY_DATA));
+//	}
 	
 //	@Test  Search API is not available anymore
 //	public void postYahoo() throws Exception {
