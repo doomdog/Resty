@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * Content.java
  */
 package us.monoid.web;
 
@@ -54,7 +54,7 @@ public class Content extends AbstractContent {
 	@Override
 	public void writeHeader(OutputStream os) throws IOException {
 		os.write(ascii("Content-Type: " + mime + "\r\n"));
-		os.write(ascii("Content-Length: " + String.valueOf(content.length) + "\r\n"));
+		os.write(ascii("Content-Length: " + content.length + "\r\n"));
 	}
 	
 }

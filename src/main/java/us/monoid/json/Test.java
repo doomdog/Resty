@@ -23,7 +23,7 @@ public class Test {
         Object o;
         String s;
         
-/** 
+/*
  *  Obj is a typical class that implements JSONString. It also
  *  provides some beanie methods that can be used to 
  *  construct a JSONObject. It also demonstrates constructing

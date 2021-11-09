@@ -103,7 +103,7 @@ public class JSONObject {
 		 * 
 		 * @return NULL.
 		 */
-		protected final Object clone() {
+		protected Object clone() {
 			return this;
 		}
 
@@ -132,7 +132,7 @@ public class JSONObject {
 	/**
 	 * The map where the JSONObject's properties are kept.
 	 */
-	private Map<String, Object> map;
+	private final Map<String, Object> map = new HashMap<>();
 
 	/**
 	 * It is sometimes more convenient and less ambiguous to have a
@@ -146,7 +146,6 @@ public class JSONObject {
 	 * Construct an empty JSONObject.
 	 */
 	public JSONObject() {
-		this.map = new HashMap<String, Object>();
 	}
 
 	/**
@@ -164,9 +163,9 @@ public class JSONObject {
 	 */
 	public JSONObject(JSONObject jo, String[] names) {
 		this();
-		for (int i = 0; i < names.length; i += 1) {
+		for (String name : names) {
 			try {
-				putOnce(names[i], jo.opt(names[i]));
+				putOnce(name, jo.opt(name));
 			} catch (Exception ignore) {
 			}
 		}
@@ -244,7 +243,6 @@ public class JSONObject {
 	 * @throws JSONException
 	 */
 	public JSONObject(Map<?, ?> map) {
-		this.map = new HashMap<String, Object>();
 		if (map != null) {
 			Iterator<?> i = map.entrySet().iterator();
 			while (i.hasNext()) {
@@ -293,11 +291,10 @@ public class JSONObject {
 	 *          An array of strings, the names of the fields to be obtained from
 	 *          the object.
 	 */
-	public JSONObject(Object object, String names[]) {
+	public JSONObject(Object object, String[] names) {
 		this();
-		Class<? extends Object> c = object.getClass();
-		for (int i = 0; i < names.length; i += 1) {
-			String name = names[i];
+		Class<?> c = object.getClass();
+		for (String name : names) {
 			try {
 				putOpt(name, c.getField(name).get(object));
 			} catch (Exception ignore) {
@@ -654,7 +651,7 @@ public class JSONObject {
 		if (object == null) {
 			return null;
 		}
-		Class<? extends Object> klass = object.getClass();
+		Class<?> klass = object.getClass();
 		Field[] fields = klass.getFields();
 		int length = fields.length;
 		if (length == 0) {
@@ -902,7 +899,7 @@ public class JSONObject {
 	/**
 	 * Get an optional boolean associated with a key. It returns the defaultValue
 	 * if there is no such key, or if it is not a Boolean or the String "true" or
-	 * "false" (case insensitive).
+	 * "false" (case-insensitive).
 	 * 
 	 * @param key
 	 *          A key string.
@@ -921,7 +918,7 @@ public class JSONObject {
 	/**
 	 * Get an optional boolean associated with a key. It returns the defaultValue
 	 * if there is no such key, or if it is not a Boolean or the String "true" or
-	 * "false" (case insensitive).
+	 * "false" (case-insensitive).
 	 * 
 	 * @param key
 	 *          A key string.
@@ -973,8 +970,7 @@ public class JSONObject {
 	public double optDouble(String key, double defaultValue) {
 		try {
 			Object o = opt(key);
-			return o instanceof Number ? ((Number) o).doubleValue() : new Double((String) o)
-					.doubleValue();
+			return o instanceof Number ? ((Number) o).doubleValue() : Double.parseDouble((String) o);
 		} catch (Exception e) {
 			return defaultValue;
 		}
@@ -1221,16 +1217,15 @@ public class JSONObject {
 	}
 
 	private void populateMap(Object bean) {
-		Class<? extends Object> klass = bean.getClass();
+		Class<?> klass = bean.getClass();
 
 		// If klass is a System class then set includeSuperClass to false.
 
 		boolean includeSuperClass = klass.getClassLoader() != null;
 
 		Method[] methods = (includeSuperClass) ? klass.getMethods() : klass.getDeclaredMethods();
-		for (int i = 0; i < methods.length; i += 1) {
+		for (Method method : methods) {
 			try {
-				Method method = methods[i];
 				if (Modifier.isPublic(method.getModifiers())) {
 					String name = method.getName();
 					String key = "";
@@ -1591,7 +1586,7 @@ public class JSONObject {
 		char c = 0;
 		int i;
 		int len = string.length();
-		StringBuffer sb = new StringBuffer(len + 4);
+		StringBuilder sb = new StringBuilder(len + 4);
 		String t;
 
 		sb.append('"');
@@ -1628,7 +1623,7 @@ public class JSONObject {
 			default:
 				if (c < ' ' || (c >= '\u0080' && c < '\u00a0') || (c >= '\u2000' && c < '\u2100')) {
 					t = "000" + Integer.toHexString(c);
-					sb.append("\\u" + t.substring(t.length() - 4));
+					sb.append("\\u").append(t.substring(t.length() - 4));
 				} else {
 					sb.append(c);
 				}
@@ -1668,7 +1663,7 @@ public class JSONObject {
 	 * @return An iterator of the keys.
 	 */
 	public Iterator<String> sortedKeys() {
-		return new TreeSet<String>(this.map.keySet()).iterator();
+		return new TreeSet<>(this.map.keySet()).iterator();
 	}
 
 	/**
@@ -1785,7 +1780,7 @@ public class JSONObject {
 	public String toString() {
 		try {
 			Iterator<String> keys = sortedKeys();
-			StringBuffer sb = new StringBuffer("{");
+			StringBuilder sb = new StringBuilder("{");
 
 			while (keys.hasNext()) {
 				if (sb.length() > 1) {
@@ -1844,7 +1839,7 @@ public class JSONObject {
 			return "{}";
 		}
 		Iterator<String> keys = sortedKeys();
-		StringBuffer sb = new StringBuffer("{");
+		StringBuilder sb = new StringBuilder("{");
 		int newindent = indent + indentFactor;
 		Object o;
 		if (n == 1) {
@@ -1879,7 +1874,7 @@ public class JSONObject {
 	}
 
 	/**
-	 * Make a JSON text of an Object value. If the object has an
+	 * Make a JSON text of an Object value. If the object has a
 	 * value.toJSONString() method, then that method will be used to produce the
 	 * JSON text. The method is required to produce a strictly conforming text. If
 	 * the object does not contain a toJSONString method (which is the most common
@@ -1903,7 +1898,7 @@ public class JSONObject {
 	 *           If the value is or contains an invalid number.
 	 */
 	static String valueToString(Object value) throws JSONException {
-		if (value == null || value.equals(null)) {
+		if (value == null || value.equals("null")) {
 			return "null";
 		}
 		if (value instanceof JSONString) {
@@ -1955,7 +1950,7 @@ public class JSONObject {
 	 *           If the object contains an invalid number.
 	 */
 	static String valueToString(Object value, int indentFactor, int indent) throws JSONException {
-		if (value == null || value.equals(null)) {
+		if (value == null || value.equals("null")) {
 			return "null";
 		}
 		try {
@@ -1995,7 +1990,7 @@ public class JSONObject {
 	 * Wrap an object, if necessary. If the object is null, return the NULL
 	 * object. If it is an array or collection, wrap it in a JSONArray. If it is a
 	 * map, wrap it in a JSONObject. If it is a standard property (Double, String,
-	 * et al) then it is already wrapped. Otherwise, if it comes from one of the
+	 * et al.) then it is already wrapped. Otherwise, if it comes from one of the
 	 * java packages, turn it into a string. And if it doesn't, try to wrap it in
 	 * a JSONObject. If the wrapping fails, then null is returned.
 	 * 

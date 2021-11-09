@@ -6,7 +6,8 @@ package us.monoid.web.jp.javacc;
  * An implementation of interface CharStream, where the stream is assumed to
  * contain only ASCII characters (without unicode processing).
  */
-
+// Ignore SonarQube complaints about generated code
+@java.lang.SuppressWarnings("squid:S1197")
 public class SimpleCharStream
 {
 /** Whether parser is static. */
@@ -203,20 +204,20 @@ public class SimpleCharStream
 
   @Deprecated
   /**
+   * getColumn
    * @deprecated
    * @see #getEndColumn
    */
-
   public int getColumn() {
     return bufcolumn[bufpos];
   }
 
   @Deprecated
   /**
+   * getLine
    * @deprecated
    * @see #getEndLine
    */
-
   public int getLine() {
     return bufline[bufpos];
   }

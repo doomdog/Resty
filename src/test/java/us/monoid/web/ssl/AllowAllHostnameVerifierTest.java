@@ -9,11 +9,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 public class AllowAllHostnameVerifierTest {
-
-    private static AllowAllHostnameVerifier ALL_ALL_HOSTNAMES = new AllowAllHostnameVerifier();
-
     @Test
     public void shouldAllowAllHostnames() {
-        assertThat("Should always verify true, but was false", ALL_ALL_HOSTNAMES.verify("AnyString", Mockito.mock(SSLSession.class)), equalTo(true));
+        assertThat("Should always verify true, but was false",
+                AllowAllHostnameVerifier.ALLOW_ALL_HOSTNAMES.verify("AnyString", Mockito.mock(SSLSession.class)),
+                equalTo(true));
     }
 }

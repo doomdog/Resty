@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,9 +80,9 @@ import us.monoid.web.ssl.TrustAllX509SocketFactory;
 
 public class Resty {
 
-	protected static String MOZILLA = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13";
-	protected static String DEFAULT_USER_AGENT = "Resty/0.1 (Java)";
-	static RestyAuthenticator rath = new RestyAuthenticator();
+	protected static final String MOZILLA = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13";
+	protected static final String DEFAULT_USER_AGENT = "Resty/0.1 (Java)";
+	final static RestyAuthenticator rath = new RestyAuthenticator();
 	static {
 		try {
 			if (CookieHandler.getDefault() == null) {
@@ -467,12 +468,7 @@ public class Resty {
 	 * @return the content to send
 	 */
 	public static Content content(JSONObject someJson) {
-		Content c = null;
-		try {
-			c = new Content("application/json; charset=UTF-8", someJson.toString().getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) { /* UTF-8 is never unsupported */
-		}
-		return c;
+		return new Content("application/json; charset=UTF-8", someJson.toString().getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -483,12 +479,7 @@ public class Resty {
 	 * @return the content to send
 	 */
 	public static Content content(JSONArray someJson) {
-		Content c = null;
-		try {
-			c = new Content("application/json; charset=UTF-8", someJson.toString().getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) { /* UTF-8 is never unsupported */
-		}
-		return c;
+		return new Content("application/json; charset=UTF-8", someJson.toString().getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -499,12 +490,7 @@ public class Resty {
 	 * @return the content to send
 	 */
 	public static Content content(String somePlainText) {
-		Content c = null;
-		try {
-			c = new Content("text/plain; charset=UTF-8", somePlainText.getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) { /* UTF-8 is never unsupported */
-		}
-		return c;
+		return new Content("text/plain; charset=UTF-8", somePlainText.getBytes(StandardCharsets.UTF_8));
 	}
 
 	/**
@@ -526,8 +512,7 @@ public class Resty {
 	 * @return a content object to be useable for upload
 	 */
 	public static FormContent form(String query) {
-		FormContent fc = new FormContent(query);
-		return fc;
+		return new FormContent(query);
 	}
 
 	/**
@@ -536,8 +521,7 @@ public class Resty {
 	 *
 	 */
 	public static MultipartContent form(FormData... formData) {
-		MultipartContent mc = new MultipartContent("form-data", formData);
-		return mc;
+		return new MultipartContent("form-data", formData);
 	}
 
 	/**
@@ -647,7 +631,7 @@ public class Resty {
 
 	protected Map<String, String> getAdditionalHeaders() {
 		if (additionalHeaders == null) {
-			additionalHeaders = new HashMap<String, String>();
+			additionalHeaders = new HashMap<>();
 		}
 		return additionalHeaders;
 	}
@@ -723,24 +707,21 @@ public class Resty {
 
 	/** Option to set a timeout. Use the static timeout method for added convenience. */
 	public static class Timeout extends Option {
-		private int timeout;
-
+		private final int timeout;
 		public Timeout(int t) {
 			timeout = t;
 		}
-
 		@Override
 		public void apply(URLConnection urlConnection) {
 			urlConnection.setConnectTimeout(timeout);
 		}
-
 	}
 
 	/** Option to set the proxy for a Resty instance.
 	 */
 	public static class Proxy extends Option {
-		private String host;
-		private int port;
+		private final String host;
+		private final int port;
 		public Proxy(String aHost, int aPort) {
 			host = aHost;
 			port = aPort;
@@ -750,5 +731,4 @@ public class Resty {
 			resty.setProxy(host,port);
 		}
 	}
-
 }

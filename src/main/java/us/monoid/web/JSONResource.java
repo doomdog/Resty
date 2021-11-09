@@ -3,6 +3,7 @@ package us.monoid.web;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 import us.monoid.json.JSONException;
 import us.monoid.json.JSONObject;
@@ -34,6 +35,15 @@ public class JSONResource extends AbstractResource {
 		return (JSONArray)json;
 	}
 
+    /**
+     * Parse and return a boolean value.
+     * @return the boolean value.
+     */
+    public boolean bool() throws IOException, JSONException {
+        if(json == null) unmarshal();
+		return (boolean) json;
+	}
+
 	/** 
 	 * Parse and return JSON object. Parsing is done only once after which the inputStrem is at EOF.
 	 * @return the JSON object
@@ -57,7 +67,7 @@ public class JSONResource extends AbstractResource {
 	
 	/** Transforming the JSON on the fly */
 	protected Object unmarshal() throws IOException, JSONException {
-		json = new JSONTokener(new InputStreamReader(inputStream, "UTF-8")).nextValue();
+		json = new JSONTokener(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).nextValue();
 		inputStream.close();
 		return json;
 	}

@@ -48,9 +48,7 @@ public class XMLResource extends TextResource {
 			}
 			try {
 				document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
+			} catch (Exception /*SAXException|ParserConfigurationException*/ e) {
 				e.printStackTrace();
 			}
 			inputStream.close();

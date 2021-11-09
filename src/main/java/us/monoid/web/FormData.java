@@ -1,5 +1,5 @@
 /**
- * 
+ * FormData.java
  */
 package us.monoid.web;
 
@@ -22,7 +22,7 @@ public class FormData extends AbstractContent {
 	public FormData(String aControlName, AbstractContent content) {
 		controlName = aControlName;
 		wrappedContent = content;
-		/** if (content instanceof FileContent) { fileName = ...} */
+		/* if (content instanceof FileContent) { fileName = ...} */
 	}
 	
 	public FormData(String aControlName, String aFileName, AbstractContent content) {

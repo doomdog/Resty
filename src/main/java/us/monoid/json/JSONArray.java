@@ -83,13 +83,12 @@ public class JSONArray {
 	/**
 	 * The arrayList where the JSONArray's properties are kept.
 	 */
-	private ArrayList<Object> myArrayList;
+	private final ArrayList<Object> myArrayList =  new ArrayList<>();
 
 	/**
 	 * Construct an empty JSONArray.
 	 */
 	public JSONArray() {
-		this.myArrayList = new ArrayList<Object>();
 	}
 
 	/**
@@ -135,7 +134,7 @@ public class JSONArray {
 			case ']':
 			case ')':
 				if (q != c) {
-					throw x.syntaxError("Expected a '" + new Character(q) + "'");
+					throw x.syntaxError("Expected a '" + q + "'");
 				}
 				return;
 			default:
@@ -165,7 +164,6 @@ public class JSONArray {
 	 *          A Collection.
 	 */
 	public JSONArray(Collection<?> collection) {
-		this.myArrayList = new ArrayList<Object>();
 		if (collection != null) {
 			for (Object o : collection) {
 				this.myArrayList.add(JSONObject.wrap(o));
@@ -243,8 +241,7 @@ public class JSONArray {
 	public double getDouble(int index) throws JSONException {
 		Object o = get(index);
 		try {
-			return o instanceof Number ? ((Number) o).doubleValue() : Double.valueOf((String) o)
-					.doubleValue();
+			return o instanceof Number ? ((Number) o).doubleValue() : Double.valueOf((String) o);
 		} catch (Exception e) {
 			throw new JSONException("JSONArray[" + index + "] is not a number.");
 		}
@@ -353,7 +350,7 @@ public class JSONArray {
 	 */
 	public String join(String separator) throws JSONException {
 		int len = length();
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < len; i += 1) {
 			if (i > 0) {
@@ -400,7 +397,7 @@ public class JSONArray {
 	/**
 	 * Get the optional boolean value associated with an index. It returns the
 	 * defaultValue if there is no value at that index or if it is not a Boolean
-	 * or the String "true" or "false" (case insensitive).
+	 * or the String "true" or "false" (case-insensitive).
 	 * 
 	 * @param index
 	 *          The index must be between 0 and length() - 1.
@@ -602,7 +599,7 @@ public class JSONArray {
 	 * @return this.
 	 */
 	public JSONArray put(double value) throws JSONException {
-		Double d = new Double(value);
+		Double d = value;
 		JSONObject.testValidity(d);
 		put(d);
 		return this;
@@ -621,7 +618,7 @@ public class JSONArray {
 	}
 
 	/**
-	 * Append an long value. This increases the array's length by one.
+	 * Append a long value. This increases the array's length by one.
 	 * 
 	 * @param value
 	 *          A long value.
@@ -755,7 +752,7 @@ public class JSONArray {
 	 *          The Map value.
 	 * @return this.
 	 * @throws JSONException
-	 *           If the index is negative or if the the value is an invalid
+	 *           If the index is negative or if the value is an invalid
 	 *           number.
 	 */
 	public JSONArray put(int index, Map<?, ?> value) throws JSONException {
@@ -776,7 +773,7 @@ public class JSONArray {
 	 *          JSONObject.NULL object.
 	 * @return this.
 	 * @throws JSONException
-	 *           If the index is negative or if the the value is an invalid
+	 *           If the index is negative or if the value is an invalid
 	 *           number.
 	 */
 	public JSONArray put(int index, Object value) throws JSONException {
@@ -885,7 +882,7 @@ public class JSONArray {
 			return "[]";
 		}
 		int i;
-		StringBuffer sb = new StringBuffer("[");
+		StringBuilder sb = new StringBuilder("[");
 		if (len == 1) {
 			sb.append(JSONObject.valueToString(this.myArrayList.get(0), indentFactor, indent));
 		} else {

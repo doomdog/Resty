@@ -2,8 +2,9 @@
 /* JavaCCOptions:MULTI=false,NODE_USES_PARSER=false,VISITOR=false,TRACK_TOKENS=false,NODE_PREFIX=AST,NODE_EXTENDS=,NODE_FACTORY=JSONPathCompiler,SUPPORT_CLASS_VISIBILITY_PUBLIC=true */
 package us.monoid.web.jp.javacc;
 
-public
-class SimpleNode implements Node {
+// Ignore SonarQube complaints about generated code
+@java.lang.SuppressWarnings("squid:S1197")
+public class SimpleNode implements Node {
 
   protected Node parent;
   protected Node[] children;

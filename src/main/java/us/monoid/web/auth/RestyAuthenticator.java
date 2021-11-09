@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * RestyAuthenticator.java
  */
 package us.monoid.web.auth;
 
@@ -8,8 +8,6 @@ import java.net.PasswordAuthentication;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,8 +21,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 
  */
 public class RestyAuthenticator extends Authenticator {
-	List<Site> sites = new CopyOnWriteArrayList<Site>();
-	Map<String, Realm> realms = new ConcurrentHashMap<String, Realm>();
+	private final List<Site> sites = new CopyOnWriteArrayList<>();
+	private final Map<String, Realm> realms = new ConcurrentHashMap<>();
 	
 	@Override
 	protected PasswordAuthentication getPasswordAuthentication() {
@@ -101,8 +99,8 @@ public class RestyAuthenticator extends Authenticator {
 	}
 	
 	static class Realm {
-		String login;
-		char[] pwd;
+		final String login;
+		final char[] pwd;
 		public Realm(String aLogin, char[] charArray) { login = aLogin; pwd = charArray; }
 	}
 	

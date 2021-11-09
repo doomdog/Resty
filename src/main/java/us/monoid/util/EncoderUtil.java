@@ -21,10 +21,11 @@ package us.monoid.util;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.BitSet;
 import java.util.Locale;
 
-/**
+/*
  * Stolen from Mime4j project.
  */
 
@@ -35,7 +36,7 @@ import java.util.Locale;
  * 
  */
 public class EncoderUtil {
-	public static final Charset US_ASCII = Charset.forName("US-ASCII");
+	public static final Charset US_ASCII = StandardCharsets.US_ASCII;
 	// This array is a lookup table that translates 6-bit positive integer index
 	// values into their "Base64 Alphabet" equivalents as specified in Table 1
 	// of RFC 2045.
@@ -584,13 +585,13 @@ public class EncoderUtil {
 		for (int index = 0; index < len; index++) {
 			char ch = text.charAt(index);
 			if (ch > 0xff) {
-				return Charset.forName("UTF-8");
+				return StandardCharsets.UTF_8;
 			}
 			if (ch > 0x7f) {
 				ascii = false;
 			}
 		}
-		return ascii ? Charset.forName("US-ASCII") : Charset.forName("ISO-8859-1");
+		return ascii ? StandardCharsets.US_ASCII : StandardCharsets.ISO_8859_1;
 	}
 
 	private static Encoding determineEncoding(byte[] bytes, Usage usage) {

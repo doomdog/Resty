@@ -1,6 +1,7 @@
 package us.monoid.web;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 /** Encapsulates form-data sent to web services.
  * Currently only application/x-www-form-urlencoded is supported.
@@ -16,15 +17,8 @@ public class FormContent extends Content {
 	}
 	
 	private static byte[] getBytes(String query) {
-		try {
-			return query.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new byte[0]; // should never happen
+		return query.getBytes(StandardCharsets.UTF_8);
 	}
-
 
 	@Override
 	public String toString() {

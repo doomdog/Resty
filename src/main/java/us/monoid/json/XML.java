@@ -62,6 +62,12 @@ public class XML {
     /** The Character '/'. */
     public static final Character SLASH = new Character('/');
 
+
+    /** This utility class has all static methods */
+    private XML() {
+        throw new UnsupportedOperationException("this class is static");
+    }
+
     /**
      * Replace special characters with XML escapes:
      * <pre>
@@ -74,7 +80,7 @@ public class XML {
      * @return The escaped string.
      */
     public static String escape(String string) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0, len = string.length(); i < len; i++) {
             char c = string.charAt(i);
             switch (c) {
@@ -291,7 +297,7 @@ public class XML {
      * because JSON is a data format and XML is a document format. XML uses
      * elements, attributes, and content text, while JSON uses unordered
      * collections of name/value pairs and arrays of values. JSON does not
-     * does not like to distinguish between elements and attributes.
+     * like to distinguish between elements and attributes.
      * Sequences of similar elements are represented as JSONArrays. Content
      * text may be placed in a "content" member. Comments, prologs, DTDs, and
      * <code>&lt;[ [ ]]></code> are ignored.
@@ -329,7 +335,7 @@ public class XML {
      */
     public static String toString(Object o, String tagName)
             throws JSONException {
-        StringBuffer b = new StringBuffer();
+        StringBuilder b = new StringBuilder();
         int          i;
         JSONArray    ja;
         JSONObject   jo;

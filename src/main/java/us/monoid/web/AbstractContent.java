@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * AbstractContent.java
  */
 package us.monoid.web;
 

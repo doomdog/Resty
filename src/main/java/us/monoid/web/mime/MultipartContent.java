@@ -3,13 +3,11 @@ package us.monoid.web.mime;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import us.monoid.util.EncoderUtil;
 import us.monoid.web.AbstractContent;
 
 /** Content handler for multipart data of any shape (form, mixed, alternative)

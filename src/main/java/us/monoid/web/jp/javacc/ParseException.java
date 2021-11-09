@@ -11,6 +11,8 @@ package us.monoid.web.jp.javacc;
  * You can modify this class to customize your error reporting
  * mechanisms so long as you retain the public fields.
  */
+// Ignore SonarQube complaints about generated code
+@java.lang.SuppressWarnings({"squid:S1149","squid:S1165"})
 public class ParseException extends Exception {
 
   /**

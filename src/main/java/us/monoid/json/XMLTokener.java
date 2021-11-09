@@ -1,5 +1,6 @@
 package us.monoid.json;
 
+import java.util.HashMap;
 
 /*
 Copyright (c) 2002 JSON.org
@@ -37,15 +38,14 @@ public class XMLTokener extends JSONTokener {
    /** The table of entity values. It initially contains Character values for
     * amp, apos, gt, lt, quot.
     */
-   public static final java.util.HashMap<String, Character> entity;
+   public static final HashMap<String, Character> ENTITY = new HashMap<>();
 
    static {
-       entity = new java.util.HashMap<String, Character>(8);
-       entity.put("amp",  XML.AMP);
-       entity.put("apos", XML.APOS);
-       entity.put("gt",   XML.GT);
-       entity.put("lt",   XML.LT);
-       entity.put("quot", XML.QUOT);
+       ENTITY.put("amp",  XML.AMP);
+       ENTITY.put("apos", XML.APOS);
+       ENTITY.put("gt",   XML.GT);
+       ENTITY.put("lt",   XML.LT);
+       ENTITY.put("quot", XML.QUOT);
    }
 
     /**
@@ -64,7 +64,7 @@ public class XMLTokener extends JSONTokener {
     public String nextCDATA() throws JSONException {
         char         c;
         int          i;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (;;) {
             c = next();
             if (end()) {
@@ -92,7 +92,7 @@ public class XMLTokener extends JSONTokener {
      */
     public Object nextContent() throws JSONException {
         char         c;
-        StringBuffer sb;
+        StringBuilder sb;
         do {
             c = next();
         } while (Character.isWhitespace(c));
@@ -102,7 +102,7 @@ public class XMLTokener extends JSONTokener {
         if (c == '<') {
             return XML.LT;
         }
-        sb = new StringBuffer();
+        sb = new StringBuilder();
         for (;;) {
             if (c == '<' || c == 0) {
                 back();
@@ -126,7 +126,7 @@ public class XMLTokener extends JSONTokener {
      * @throws JSONException If missing ';' in XML entity.
      */
     public Object nextEntity(char a) throws JSONException {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (;;) {
             char c = next();
             if (Character.isLetterOrDigit(c) || c == '#') {
@@ -138,7 +138,7 @@ public class XMLTokener extends JSONTokener {
             }
         }
         String s = sb.toString();
-        Object e = entity.get(s);
+        Object e = ENTITY.get(s);
         return e != null ? e : a + s + ";";
     }
 
@@ -215,12 +215,12 @@ public class XMLTokener extends JSONTokener {
      * may be a string wrapped in single quotes or double quotes, or it may be a
      * name.
      * @return a String or a Character.
-     * @throws JSONException If the XML is not well formed.
+     * @throws JSONException If the XML is not well-formed.
      */
     public Object nextToken() throws JSONException {
         char c;
         char q;
-        StringBuffer sb;
+        StringBuilder sb;
         do {
             c = next();
         } while (Character.isWhitespace(c));
@@ -245,7 +245,7 @@ public class XMLTokener extends JSONTokener {
         case '"':
         case '\'':
             q = c;
-            sb = new StringBuffer();
+            sb = new StringBuilder();
             for (;;) {
                 c = next();
                 if (c == 0) {
@@ -264,7 +264,7 @@ public class XMLTokener extends JSONTokener {
 
 // Name
 
-            sb = new StringBuffer();
+            sb = new StringBuilder();
             for (;;) {
                 sb.append(c);
                 c = next();

@@ -3,6 +3,8 @@
 package us.monoid.web.jp.javacc;
 
 /** Token Manager Error. */
+// Ignore SonarQube complaints about generated code
+@java.lang.SuppressWarnings({"squid:S1149","squid:S1165"})
 public class TokenMgrError extends Error
 {
 

@@ -33,7 +33,7 @@ SOFTWARE.
  * Each row of text represents a row in a table or a data record. Each row
  * ends with a NEWLINE character. Each row contains one or more values.
  * Values are separated by commas. A value can contain any character except
- * for comma, unless is is wrapped in single quotes or double quotes.
+ * for comma, unless it is wrapped in single quotes or double quotes.
  * <p>
  * The first row usually contains the names of the columns.
  * <p>
@@ -45,6 +45,11 @@ SOFTWARE.
  */
 public class CDL {
 
+    /** This utility class has all static methods */
+    private CDL() {
+        throw new UnsupportedOperationException("this class is static");
+    }
+
     /**
      * Get the next value. The value can be wrapped in quotes. The value can
      * be empty.
@@ -55,7 +60,7 @@ public class CDL {
     private static String getValue(JSONTokener x) throws JSONException {
         char c;
         char q;
-        StringBuffer sb;
+        StringBuilder sb;
         do {
             c = x.next();
         } while (c == ' ' || c == '\t');
@@ -65,7 +70,7 @@ public class CDL {
         case '"':
         case '\'':
         	q = c;
-        	sb = new StringBuffer();
+        	sb = new StringBuilder();
         	for (;;) {
         		c = x.next();
         		if (c == q) {
@@ -120,7 +125,7 @@ public class CDL {
 
     /**
      * Produce a JSONObject from a row of comma delimited text, using a
-     * parallel JSONArray of strings to provides the names of the elements.
+     * parallel JSONArray of strings to provide the names of the elements.
      * @param names A JSONArray of names. This is commonly obtained from the
      *  first row of a comma delimited text file using the rowToJSONArray
      *  method.
@@ -205,7 +210,7 @@ public class CDL {
      * @return A string ending in NEWLINE.
      */
     public static String rowToString(JSONArray ja) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < ja.length(); i += 1) {
             if (i > 0) {
                 sb.append(',');
@@ -267,7 +272,7 @@ public class CDL {
         if (names == null || names.length() == 0) {
             return null;
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < ja.length(); i += 1) {
             JSONObject jo = ja.optJSONObject(i);
             if (jo != null) {

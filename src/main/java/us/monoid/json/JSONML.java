@@ -36,6 +36,11 @@ import java.util.Iterator;
  */
 public class JSONML {
 
+	/** This utility class has all static methods */
+	private JSONML() {
+		throw new UnsupportedOperationException("this class is static");
+	}
+
 	/**
 	 * Parse XML values and store them in a JSONArray.
 	 * 
@@ -313,7 +318,7 @@ public class JSONML {
 		String k;
 		Iterator<?> keys;
 		int length;
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		String tagName;
 		String v;
 
@@ -353,8 +358,7 @@ public class JSONML {
 
 		length = ja.length();
 		if (i >= length) {
-			sb.append('/');
-			sb.append('>');
+			sb.append("/>");
 		} else {
 			sb.append('>');
 			do {
@@ -390,7 +394,7 @@ public class JSONML {
 	 * @throws JSONException
 	 */
 	public static String toString(JSONObject jo) throws JSONException {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		Object e;
 		int i;
 		JSONArray ja;
@@ -434,8 +438,7 @@ public class JSONML {
 
 		ja = jo.optJSONArray("childNodes");
 		if (ja == null) {
-			sb.append('/');
-			sb.append('>');
+			sb.append("/>");
 		} else {
 			sb.append('>');
 			len = ja.length();

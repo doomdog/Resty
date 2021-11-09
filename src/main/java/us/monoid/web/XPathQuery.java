@@ -27,26 +27,24 @@ public class XPathQuery extends PathQuery<XMLResource,NodeList> {
 	}
 
 	private <T> QName getConstant(Class<T> aReturnType) {
-		QName returnType = null;
-		if (aReturnType == String.class) {
-			returnType = XPathConstants.STRING;
-		} else if (aReturnType == Boolean.class) {
-			returnType = XPathConstants.BOOLEAN;
-		} else if (aReturnType == Double.class) {
-			returnType = XPathConstants.NUMBER;
-		} else if (aReturnType == NodeList.class) {
-			returnType = XPathConstants.NODESET;
-		} else if (aReturnType == Node.class) {
-			returnType = XPathConstants.NODE;
-		} else throw new IllegalArgumentException("" + aReturnType + " is not supported as result of an XPath expression");
-		return returnType;
+		if (aReturnType == String.class)
+			return XPathConstants.STRING;
+		if (aReturnType == Boolean.class)
+			return XPathConstants.BOOLEAN;
+		if (aReturnType == Double.class)
+			return XPathConstants.NUMBER;
+		if (aReturnType == NodeList.class)
+			return XPathConstants.NODESET;
+		if (aReturnType == Node.class)
+			return XPathConstants.NODE;
+
+		throw new IllegalArgumentException("'" + aReturnType + "' is not supported as result of an XPath expression");
 	}
 
 	/** Eval to a NodeList */
 	@Override
 	NodeList eval(XMLResource resource) throws Exception {
-		NodeList retVal = (NodeList) xPathExpression.evaluate(resource.doc(), XPathConstants.NODESET);
-		return retVal;
+		return (NodeList) xPathExpression.evaluate(resource.doc(), XPathConstants.NODESET);
 	}
 	
 	/** Evaluate the XPath on an XMLResource and convert the result into aReturnType.
@@ -58,8 +56,6 @@ public class XPathQuery extends PathQuery<XMLResource,NodeList> {
 	 * @throws Exception
 	 */
 	public <T> T eval(XMLResource resource, Class<T>aReturnType) throws Exception {
-		T retVal = (T) xPathExpression.evaluate(resource.doc(), getConstant(aReturnType));
-		return retVal;
+		return (T) xPathExpression.evaluate(resource.doc(), getConstant(aReturnType));
 	}
-
 }

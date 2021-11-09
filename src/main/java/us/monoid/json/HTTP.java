@@ -36,6 +36,11 @@ public class HTTP {
     /** Carriage return/line feed. */
     public static final String CRLF = "\r\n";
 
+    /** This utility class has all static methods */
+    private HTTP() {
+        throw new UnsupportedOperationException("this class is static");
+    }
+
     /**
      * Convert an HTTP header string into a JSONObject. It can be a request
      * header or a response header. A request header will contain
@@ -127,7 +132,7 @@ public class HTTP {
     public static String toString(JSONObject o) throws JSONException {
         Iterator<?>     keys = o.keys();
         String       s;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (o.has("Status-Code") && o.has("Reason-Phrase")) {
             sb.append(o.getString("HTTP-Version"));
             sb.append(' ');

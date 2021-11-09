@@ -33,6 +33,11 @@ import java.util.Iterator;
  */
 public class CookieList {
 
+    /** This utility class has all static methods */
+    private CookieList() {
+        throw new UnsupportedOperationException("this class is static");
+    }
+
     /**
      * Convert a cookie list into a JSONObject. A cookie list is a sequence
      * of name/value pairs. The names are separated from the values by '='.
@@ -72,7 +77,7 @@ public class CookieList {
         boolean      b = false;
         Iterator<?>     keys = o.keys();
         String       s;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (keys.hasNext()) {
             s = keys.next().toString();
             if (!o.isNull(s)) {

@@ -58,7 +58,7 @@ public abstract class AbstractResource extends Resty {
 				try {
 					// read the response body
 					byte[] buf = new byte[1024];
-					int read = -1;
+					int read;
 					while ((read = es.read(buf)) > 0) {
 						baos.write(buf, 0, read);
 					}
@@ -131,7 +131,7 @@ public abstract class AbstractResource extends Resty {
 	 * @return The list of values for header 'name'
 	 */
 	public List<String> header( String name ) {
-		List list = new ArrayList();
+		List<String> list = new ArrayList<>();
 		HttpURLConnection http = http();
 		if (http != null) {
 			Map<String, List<String>> header = http.getHeaderFields();

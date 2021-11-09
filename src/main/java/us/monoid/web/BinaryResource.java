@@ -1,5 +1,5 @@
-/**
- * 
+/*
+ * BinaryResource.java
  */
 package us.monoid.web;
 
@@ -39,7 +39,7 @@ public class BinaryResource extends AbstractResource {
 	public File save(File aFileName) throws IOException {
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(aFileName), 1024);
 		byte[] buffer = new byte[1024];
-		int len = -1;
+		int len;
 		while ((len = inputStream.read(buffer)) != -1) {
 			bos.write(buffer, 0, len);
 		}
